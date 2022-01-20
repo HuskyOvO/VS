@@ -1,380 +1,245 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include <stdio.h>
 #include <string.h>
-#include <windows.h>
-#include <stdlib.h>
 #include <math.h>
-#include <time.h>
 
 
-/*********************************************************
-****************************关机程序*********************/
+/**********************************************************************
+********************************函数的声明*****************************
+**********************************************************************/
+#include "add.h"//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 int main()
-{//shutdown -s -t 60   60秒后关机shutdown -a 取消关机
-    char input[20] = { 0 };
-    system("shutdown -s -t 60");
-    again:
-    printf("你的电脑将在1分钟内关机，如果输入：我是猪，即可取消\n请输入>:");
-    scanf("%s", input);
-    if (strcmp(input, "我是猪") == 0)//strcmp用于比较字符串
-    {
-        system("shutdown -a");
-    }
-    else
-    {
-        goto again;
-    }
-    return 0;
+{
+	int a = 10;
+	int b = 20;
+	int sum = Add(a, b);
+	printf("%d\n", sum);
+	return 0;
 }
 
-/*************************************************************************
-*********************************猜数字游戏*******************************
-*************************************************************************/
-void menu()
+int Add(int, int);//函数的声明一般在头文件中
+int main()
 {
-	printf("*************************************\n");
-	printf("***********1.开始   0.结束***********\n");
-	printf("*************************************\n");
+	int a = 10;
+	int b = 20;
+	int sum = Add(a, b);
+	printf("%d\n", sum);
+	return 0;
 }
-void game()
+
+int Add(int x, int y)//函数的定义   一般在源文件中
 {
-	int ret = 0;
-	int guess = 0;
-	ret = rand()%100+1;//生成1~100随机数
-	while (1)
+	int z = 0;
+	z = x + y;
+	return z;
+
+}
+
+int main()
+{
+	int len = 0;
+	len = strlen("abc");
+	printf("%d\n", len);
+
+	printf("%d\n", strlen(len));//函数的链式访问  一函数的返回值作为另一个函数的参数
+ 
+	return 0;
+}
+int main()
+{
+	printf("%d", printf("%d", printf("%d", 43)));
+	//printf的返回值是字符的个数
+	return 0;
+}
+
+
+/**********************************************************************
+**************************对调用的函数进行计数*************************
+**********************************************************************/
+int Add(int* p)
+{
+	(*p)++;
+}
+
+int main()
+{
+	int sum = 0;
+	Add(&sum);
+	printf("%d\n", sum);
+	Add(&sum);
+	printf("%d\n", sum);
+	Add(&sum);
+	printf("%d\n", sum);
+	Add(&sum);
+	printf("%d\n", sum);
+	return 0;
+}
+
+/**********************************************************************
+**************************用函数实现二分法查找*************************
+**********************************************************************/
+int binary_search(int arr[], int k,int sz)
+{
+	int left = 0;
+	int right = sz-1;
+	int mid = (left + right) / 2;
+	while(left<=right)
 	{
-		printf("请猜数字>:");
-		scanf_s("%d", &guess);
-		if (guess > ret)
+		if (arr[mid] > k)
 		{
-			printf("猜大了\n");
+			right = mid - 1;
+			mid = (left + right) / 2 - 1;
 		}
-		else if(guess<ret)
+		else if (arr[mid] < k)
 		{
-			printf("猜小了\n");
+			left = mid + 1;
+			mid = (left + right) / 2 - 1;
 		}
 		else
-		{
-			printf("猜对了\n");
-			break;
-		}
+			return mid;
 	}
-}
-int main()
-{
-	srand((unsigned int)time(NULL));
-	int input = 0;
-	do
-	{
-		menu();
-		printf("请选择>:");
-		scanf_s("%d", &input);
-		switch (input)
-		{
-		case 1:
-			game();
-			break;
-		case 0:
-			printf("退出游戏");
-			break;
-		default:
-			printf("选择错误");
-			Sleep(1000);
-			system("cls");
-			break;
-		}
-	} 
-	while (input);
-	return 0;
-}
-/*********************************************************
-************************打印九九乘法表********************/
-int main()
-{
-	int i = 0;
-	for (i = 1;i <= 9;i++)
-	{
-		int j = 1;
-		for (j = 1;j <= i;j++)
-		{
-			printf("%d*%d=%-2d ", i, j,i*j);//%d中间加数字x表示打印x位整数
-		}                                   //x为负则左对齐
-		printf("\n");
-	}
+	return -1;
 }
 
 int main()
 {
-	int a = 1;
-	int b = 1;
-	for (a = 1;a <= 9;a++)
-	{
-		for (b = 1;b <= 9;b++)
-		{
-			if (b >= a)
-			{
-				printf("%d*%d=%-2d ", a, b, a*b);
-			}
-		}
-		if (b = 9)
-		{
-			printf("\n");
-		}
-	}
-
-}
-
-/*********************************************************
-************************10个数的最大值********************/
-int main()
-{
-	int arr[] = { -2, -3, -4, -5, -6, -7, -8, -9, -1, -10 };
-	int a = 0;
-	int b = 1;
-	for (b=1;b <= 9;b++)
-	{
-		if (arr[a] < arr[b])
-		{
-			a = b;
-		}
-	}
-	printf("%d", arr[a]);
-}
-
-/******************计算*************************************/
-int main()
-{
-	int i = 0;
-	double sum = 0.0;
-	for (i = 1;i <= 100;i++)//定义一个a，a=-a
-	{
-		if (i % 2 == 1)
-			sum = sum + 1.0/i;
-		else
-			sum = sum - 1.0/i;
-	}
-	printf("%lf", sum);
-}
-
-/*********************************************************
-************************0~100中9的个数********************/
-int main()
-{
-	int i = 0;
-	int j = 0;
-	for (i = 1;i <= 100;i++)
-	{
-		if (i % 10 == 9 || i / 10 == 9)
-		{
-			j++;
-		}
-		if (i % 10 == 9 && i / 10 == 9)
-		{
-			j++;
-		}
-	}
-	printf("%d\n", j);
-}
-
-/*********************************************************
-************************100~200的素数********************/
-
-int main()
-{
-	int i = 0;
-	for (i = 101;i <= 200;i+=2)       //sqrt   是开平方的数学库函数
-	{
-		int j = 0;
-		for (j = 2;j <=sqrt(i);j++)
-		{
-			if (i % j == 0)
-			{
-				break;
-			}
-		}
-		if (j > sqrt(i))
-		{
-			printf("%d ", i);
-		}
-	}
-}
-
-/*不够好*/
-int main()
-{
-	int i = 0;
-	for (i = 100;i <= 200;i++)
-	{
-		int j = 0;
-		for (j = 2;j < i;j++)
-		{
-			if (i % j == 0)
-			{
-				break;
-			}
-		}
-		if (j == i)
-		{
-			printf("%d ", i);
-		}
-	}
-}
-int main()
-{
-	int i = 0;
-	int a = 0;
-	int c = 0;
-	for (i = 100;i <= 200;i++)
-	{
-		for (a = i - 1,c=0;a!=0;a--)
-		{
-			if (c == 0 && a == 1)
-			{
-				printf("%d ", i);
-				break;
-			}
-			if (i % a == 0)
-			{
-				c++;
-			}
-			else
-				continue;
-		}
-		
-
-	}
-}
-
-/*********************************************************
-*****************************闰年************************/
-int main()
-{
-	int i = 0;
-	for (i = 1000;i <= 2000;i++)
-	{
-		//是否为闰年
-	    //1.能被4整除且不被100整除
-		//2.能被400整除
-		if (i % 4 == 0&&i%100!=0)
-			printf("%d ", i);
-		if(i%400==0)
-			printf("%d ", i);
-	}
-	return 0;
-}
-
-/*********************************************************
-************************最大公约数************************/
-int main()
-{
-	int m = 0;
-	int n = 0;
-	int r = 0;
-	scanf_s("%d %d", &m, &n);
-	while(r=m%n)                          //辗转相除法
-	{
-		//r = m % n;
-		m = n;
-		n = r;
-	}
-	printf("%d", n);
-
-
-	return 0;
-}
-
-
-/*********************************************************
-************************三的倍数*************************/
-int main()
-{
-	int a = 0;
-	for (a = 1;a <= 100;a++)
-	{
-		if (a % 3 == 0)
-			printf("%d ", a);
-
-	}
-}
-
-
-
-/*********************************************************
-********************比较三个数的大小**********************/
-int main()
-{
-	int a = 0;
-	int b = 0;
-	int c = 0;
-	scanf_s("%d%d%d", &a, &b, &c);
-	if (a < b)
-	{
-		int tmp = a;
-		a = b;
-		b = tmp;
-	}
-	if (a < c)
-	{
-		int tmp = a;		
-		a = c;
-		c = tmp;
-	}
-	if (b < c)
-	{
-		int tmp = b;
-		b = c;
-		c = tmp;
-	}
-	printf("%d %d %d", a, b, c);
-}
-
-
-int Max(x,y,z)
-{
-	
-	if (x > y && x > z)
-	{
-		return x;
-	}
-	else if (y > x && y > z)
-		return y;
+	int arr[] = { 1,2,3,4,5,6,7,8,9,10 };
+	int k = 7;
+	int sz = sizeof(arr) / sizeof(arr[0]);
+	int ret = binary_search(arr,k,sz);
+	if (ret == -1)
+		printf("找不到指定数字");
 	else
-		return z;
+		printf("找到了，下标为%d\n", ret);
+	return 0;
+}
+
+/**********************************************************************
+**************************用函数判断闰年*******************************
+**********************************************************************/
+int is_leap_year(int x)
+{
+	if ((x % 4 == 0 && x % 100 != 0) || (x % 400 == 0))
+		return 1;
+	else
+		return 0;
 }
 int main()
 {
-	int a = 0;
-	int b = 0;
-	int c = 0;
-	scanf_s("%d%d%d", &a, &b, &c);
-	if (Max(a, b, c) == a)
-	{
-		printf("%d ", a);
-		if (b > c)
-		{
-			printf("%d %d", b, c);
-		}
-		else
-			printf("%d %d", c, b);
-	}
-	if (Max(a, b, c) == b)
-	{
-		printf("%d ", b);
-		if (a > c)
-		{
-			printf("%d %d", a, c);
-		}
-		else
-			printf("%d %d", c, a);
-	}if (Max(a, b, c) == c)
-	{
-		printf("%d ", c);
-		if (a > b)
-		{
-			printf("%d %d", a, b);
-		}
-		else
-			printf("%d %d", b, a);
-	}
+	int i = 0;
+	scanf_s("%d", &i);
+	if ((is_leap_year(i)) == 1)
+		printf("是闰年");
+	else
+		printf("不是闰年");
+
+	return 0;
 }
 
+/**********************************************************************
+**************************用函数判断素数*******************************
+**********************************************************************/
+int is_prime(int x)
+{
+	int y = 1;
+	for (y = 2;y <= sqrt(x);y++)
+	{
+		if (x % y == 0)
+			return 0;
+	}
+		return 1;
+}
+int main()
+{
+	int i = 0;
+	for (i = 100;i <= 200;i++)
+	{
+		if (is_prime(i) == 1)
+		{
+			printf("%d ", i);
+		}
+	}
+	return 0;
+}
+
+/**********************************************************************
+*********************************函数**********************************
+**********************************************************************/
+void Swap1(int x, int y)//传值调用
+{
+	int tmp = 0;
+	tmp = x;                     //对比Swap1 Swap2
+	x = y;
+	y = tmp;
+}
+
+void Swap2(int* pa, int* pb)//int* pa 取地址 *pa解引用  传址调用
+{
+	int tmp = 0;
+	tmp = *pa;
+	*pa = *pb;
+	*pb = tmp;
+}
+
+int main()
+{
+	int a = 10;
+	int b = 20;
+	int tmp = 0;
+	printf("a=%d,b=%d\n", a, b);
+	//Swap1(a, b);
+	Swap2(&a, &b);
+	//tmp = a;
+	//a = b;
+	//b = tmp;
+	printf("a=%d,b=%d\n", a, b);
+	return 0;
+}
+
+int get_max(int x, int y)
+{
+	return (x > y) ? x : y;
+}
+
+int main()
+{
+	int a = 10;
+	int b = 20;
+	int max = get_max(a, b);
+	printf("%d\n", max);
+	return 0;
+}
+
+int main()
+{
+	char arr[] = "hello world";
+	memset(arr, '*', 5);    //memory -内存  set -设置
+	printf("%s\n", arr);
+	return 0;
+}
+
+int main()
+{
+	char arr1[] = "bit";
+	char arr2[] = "#######";
+	strcpy(arr2, arr1);    //源头要大于目的地
+	printf("%s\n", arr2);
+	return 0;
+}
+
+int Add(int x, int y)
+{
+	int z = 0;
+	z = x + y;
+	return z;
+
+}
+
+int main()
+{
+	int a = 10;
+	int b = 20;
+	int sum = Add(a, b);
+	printf("%d\n", sum);
+	return 0;
+}
