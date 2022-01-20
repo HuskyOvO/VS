@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 
-int Add(int x, int y)//º¯ÊıµÄ¶¨Òå   Ò»°ãÔÚÔ´ÎÄ¼şÖĞ
+int Add(int x, int y)//å‡½æ•°çš„å®šä¹‰   ä¸€èˆ¬åœ¨æºæ–‡ä»¶ä¸­
 {
 	int z = 0;
 	z = x + y;
